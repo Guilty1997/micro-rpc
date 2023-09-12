@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "micro-rpc")
 public class RpcConfig {
 
-    private Integer port = 10001;
+    private int port = 11111;
 
-    public Integer getPort() {
+    public int getPort() {
         return port;
     }
 
-    public void setPort(Integer port) {
+    public void setPort(int port) {
         this.port = port;
     }
 }

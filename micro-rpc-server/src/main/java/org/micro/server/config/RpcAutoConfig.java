@@ -16,8 +16,8 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(RpcConfig.class)
 public class RpcAutoConfig {
     @Bean
-    public RpcRegisterBeanPostProcessor microRpcRegisterBeanPostProcessor() {
-        return new RpcRegisterBeanPostProcessor();
+    public RpcRegisterBeanPostProcessor microRpcRegisterBeanPostProcessor(RpcConfig rpcConfig) {
+        return new RpcRegisterBeanPostProcessor(rpcConfig);
     }
 
 
