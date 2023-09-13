@@ -1,7 +1,6 @@
 package org.micro.server.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * @author：HeHongyi
@@ -10,14 +9,33 @@ import org.springframework.stereotype.Component;
  */
 @ConfigurationProperties(prefix = "micro-rpc")
 public class RpcConfig {
+    private RpcRegistry registry = new RpcRegistry();
 
-    private int port = 11111;
+    private RpcApplication application = new RpcApplication();
 
-    public int getPort() {
-        return port;
+    private RpcProtocol protocol = new RpcProtocol();
+
+    public RpcRegistry getRegistry() {
+        return registry;
     }
 
-    public void setPort(int port) {
-        this.port = port;
+    public void setRegistry(RpcRegistry registry) {
+        this.registry = registry;
+    }
+
+    public RpcApplication getApplication() {
+        return application;
+    }
+
+    public void setApplication(RpcApplication application) {
+        this.application = application;
+    }
+
+    public RpcProtocol getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(RpcProtocol protocol) {
+        this.protocol = protocol;
     }
 }

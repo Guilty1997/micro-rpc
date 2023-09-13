@@ -15,15 +15,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(RpcConfig.class)
 public class RpcAutoConfig {
+    /**
+     * 注解解析
+     *
+     * @return
+     */
     @Bean
-    public RpcRegisterBeanPostProcessor microRpcRegisterBeanPostProcessor(RpcConfig rpcConfig) {
-        return new RpcRegisterBeanPostProcessor(rpcConfig);
+    public RpcRegisterBeanPostProcessor microRpcRegisterBeanPostProcessor() {
+        return new RpcRegisterBeanPostProcessor();
     }
 
 
     @Bean
-    public ApplicationListener applicationListener() {
-        return new RpcStartEvent();
+    public ApplicationListener applicationListener(RpcConfig rpcConfig) {
+        return new RpcStartEvent(rpcConfig);
     }
 
 

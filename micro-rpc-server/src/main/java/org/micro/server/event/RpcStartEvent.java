@@ -1,16 +1,18 @@
 package org.micro.server.event;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.micro.server.annotation.MicroRpcRegister;
 import org.micro.server.cache.ServerCache;
+import org.micro.server.config.RpcConfig;
 import org.micro.server.register.IRegisterCenter;
 import org.micro.server.register.ZoomKeeperRegisterCenter;
-import org.springframework.context.ApplicationContext;
+import org.micro.server.socket.server.RpcServer;
+import org.micro.server.socket.server.handler.RequestHandler;
+import org.micro.server.socket.server.handler.ServerChannelInitializer;
+import org.micro.server.socket.utils.ThreadPoolUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 /**
  * @author：HeHongyi
@@ -18,12 +20,23 @@ import java.util.Map;
  * @description:
  */
 public class RpcStartEvent implements ApplicationListener<ContextRefreshedEvent> {
+    private Logger log = LoggerFactory.getLogger(RpcStartEvent.class);
+
+    private RpcConfig rpcConfig;
+
+    public RpcStartEvent(RpcConfig rpcConfig) {
+        this.rpcConfig = rpcConfig;
+    }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         if (!CollectionUtils.isEmpty(ServerCache.serviceMetaDataList)) {
-            IRegisterCenter registerCenter = new ZoomKeeperRegisterCenter("127.0.0.1:2181");
-
+            String ip = rpcConfig.getRegistry().getIp();
+            int port = rpcConfig.getRegistry().getPort();
+            String host = ip + ":" + port;
+            log.info("注册中心地址：{}", host);
+            IRegisterCenter registerCenter = new ZoomKeeperRegisterCenter(host);
+            ThreadPoolUtil.startNettyPool.execute(new RpcServer(new ServerChannelInitializer(), rpcConfig.getProtocol().getPort()));
             registerCenter.register(ServerCache.serviceMetaDataList.get(0));
         }
 

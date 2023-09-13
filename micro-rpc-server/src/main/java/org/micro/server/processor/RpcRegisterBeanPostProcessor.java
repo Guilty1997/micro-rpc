@@ -21,11 +21,6 @@ import java.net.UnknownHostException;
 public class RpcRegisterBeanPostProcessor implements InstantiationAwareBeanPostProcessor {
     private final static Logger log = LoggerFactory.getLogger(RpcRegisterBeanPostProcessor.class);
 
-    private RpcConfig rpcConfig;
-
-    public RpcRegisterBeanPostProcessor(RpcConfig rpcConfig) {
-        this.rpcConfig = rpcConfig;
-    }
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
@@ -35,11 +30,6 @@ public class RpcRegisterBeanPostProcessor implements InstantiationAwareBeanPostP
             Class<?> clazz = bean.getClass();
             MicroRpcRegister service = clazz.getAnnotation(MicroRpcRegister.class);
             if (service != null) {
-
-                String IP = InetAddress.getLocalHost().getHostAddress();
-                log.info("IP:{}", IP);
-
-                log.info("port:{}", rpcConfig.getPort());
                 beanName = service.name() == null ? beanName : service.name();
                 Class<?>[] interfaces = clazz.getInterfaces();
                 Method[] declaredMethods = clazz.getDeclaredMethods();
@@ -70,8 +60,6 @@ public class RpcRegisterBeanPostProcessor implements InstantiationAwareBeanPostP
             }
         } catch (ClassNotFoundException e) {
             log.error(e.getMessage());
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
         }
 
         return bean;

@@ -12,4 +12,12 @@ server:
 ##  protocol:
 ##    port: 22222
 micro-rpc:
-  port: 22222
+  application:
+    name: Test
+    version: 1.0.0
+  registry:
+    ip: 127.0.0.1
+    port: 2181
+  protocol:
+    name: dubbo
+    port: 20880
