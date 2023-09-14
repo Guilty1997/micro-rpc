@@ -1,6 +1,6 @@
 package org.micro.server.register;
 
-import micro.rpc.common.register.ServiceObject;
+import micro.rpc.common.register.ServiceInstance;
 
 /**
  * @author：HeHongyi
@@ -9,10 +9,10 @@ import micro.rpc.common.register.ServiceObject;
  */
 public interface IRegisterCenter {
 
-    void register(ServiceObject serviceObject);
+    void register(ServiceInstance serviceInstance);
 
     void remove(String serviceName);
 
-    ServiceObject get(String serviceName);
+    ServiceInstance get(String serviceName);
 
 }

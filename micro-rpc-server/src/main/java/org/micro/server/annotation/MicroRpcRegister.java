@@ -17,4 +17,6 @@ public @interface MicroRpcRegister {
 
     String name() default "";
 
+    String version() default "";
+
 }

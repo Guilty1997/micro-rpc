@@ -1,6 +1,6 @@
 package org.micro.server.cache;
 
-import micro.rpc.common.register.ServiceObject;
+import micro.rpc.common.register.ServiceRegisterData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,5 +15,5 @@ public class ServerCache {
     /**
      * 需要发布的服务元数据
      */
-    public static List<ServiceObject> serviceMetaDataList = new ArrayList<>(16);
+    public static List<ServiceRegisterData> serviceRegisterDataList = new ArrayList<>(16);
 }
