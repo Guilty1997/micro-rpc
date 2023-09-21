@@ -1,6 +1,5 @@
 package org.micro.server.processor;
 
-import micro.rpc.common.register.ServiceObject;
 import micro.rpc.common.register.ServiceRegisterData;
 import org.apache.commons.lang.StringUtils;
 import org.micro.server.annotation.MicroRpcRegister;
@@ -27,7 +26,7 @@ public class RpcRegisterBeanPostProcessor implements InstantiationAwareBeanPostP
         Class<?> clazz = bean.getClass();
         MicroRpcRegister service = clazz.getAnnotation(MicroRpcRegister.class);
         if (service != null) {
-            beanName = StringUtils.isEmpty(service.name()) ? beanName : service.name();
+            beanName = StringUtils.isEmpty(service.beanName()) ? beanName : service.beanName();
             Class<?>[] interfaces = clazz.getInterfaces();
             Method[] declaredMethods = clazz.getDeclaredMethods();
             String version = service.version();

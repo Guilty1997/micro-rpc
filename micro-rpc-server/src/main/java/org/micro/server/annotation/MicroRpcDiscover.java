@@ -4,17 +4,16 @@ import java.lang.annotation.*;
 
 /**
  * @author：HeHongyi
- * @date: 2023/9/8
- * @description: 注册注解
+ * @date: 2023/9/15
+ * @description: RPC 服务发现
  */
+
 @Documented
 @Inherited
-@Target(value = {ElementType.TYPE})
+@Target(value = {ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MicroRpcRegister {
+public @interface MicroRpcDiscover {
 
     String beanName() default "";
-
-    String version() default "";
-
 }
+ 

@@ -15,4 +15,6 @@ public interface IRegisterCenter {
 
     ServiceInstance get(String serviceName);
 
+    void subscribe(String serviceName);
+
 }

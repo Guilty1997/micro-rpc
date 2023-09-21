@@ -1,6 +1,7 @@
 package org.micro.test.controller;
 
 
+import org.micro.server.annotation.MicroRpcDiscover;
 import org.micro.test.MicroRpcTest;
 import org.micro.test.entiy.UserInfo;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ import java.util.List;
 public class MicroRpcTestController {
 
     // 调用远程服务
-//    @EasyRpcServiceInvoke( serviceId = "Test")
+    @MicroRpcDiscover()
     private MicroRpcTest easyRpcTest;
 
     // 调用本地
@@ -28,14 +29,14 @@ public class MicroRpcTestController {
 
     // 无传参 无返回测试
     @GetMapping("/test")
-    public String test(){
+    public String test() {
         easyRpcTest.test();
         return "ok";
     }
 
     // POJO传参 简单返回测试
     @GetMapping("/test1")
-    public String test1(){
+    public String test1() {
         UserInfo userInfo = new UserInfo();
         userInfo.setName("");
         userInfo.setAge(0);
@@ -50,13 +51,13 @@ public class MicroRpcTestController {
 
     // 简单传参 POJO返回测试
     @GetMapping("/test2")
-    UserInfo test2(Integer id){
+    UserInfo test2(Integer id) {
         return easyRpcTest.test2(id);
     }
 
     // 无传参 POJO_LIST返回测试
     @GetMapping("/test3")
-    List<UserInfo> test3(){
+    List<UserInfo> test3() {
         return easyRpcTest.test3();
     }
 }

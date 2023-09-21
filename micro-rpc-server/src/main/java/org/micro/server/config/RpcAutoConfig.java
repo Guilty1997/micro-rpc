@@ -1,6 +1,7 @@
 package org.micro.server.config;
 
 import org.micro.server.event.RpcStartEvent;
+import org.micro.server.processor.RpcDiscoverBeanPostProcessor;
 import org.micro.server.processor.RpcRegisterBeanPostProcessor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationListener;
@@ -25,6 +26,11 @@ public class RpcAutoConfig {
         return new RpcRegisterBeanPostProcessor();
     }
 
+
+    @Bean
+    public RpcDiscoverBeanPostProcessor microRpcDiscoverBeanPostProcessor() {
+        return new RpcDiscoverBeanPostProcessor();
+    }
 
     @Bean
     public ApplicationListener applicationListener(RpcConfig rpcConfig) {

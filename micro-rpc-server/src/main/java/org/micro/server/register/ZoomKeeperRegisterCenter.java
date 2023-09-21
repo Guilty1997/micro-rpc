@@ -47,7 +47,7 @@ public class ZoomKeeperRegisterCenter implements IRegisterCenter {
         }
 
         String urlInfo = serviceInstance.getIp() + ":" + serviceInstance.getPort() + JSON.toJSONString(serviceInstance.getRegisterData());
-        String uri = null;
+        String uri;
         try {
             uri = URLEncoder.encode(urlInfo, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -74,5 +74,10 @@ public class ZoomKeeperRegisterCenter implements IRegisterCenter {
     @Override
     public ServiceInstance get(String serviceName) {
         return null;
+    }
+
+    @Override
+    public void subscribe(String serviceName) {
+
     }
 }
