@@ -1,4 +1,4 @@
-package org.micro.server.socket;
+package micro.rpc.common;
 
 /**
  * @author：HeHongyi
@@ -10,6 +10,8 @@ public class RpcMsg {
     private short msgType;
 
     private int sequenceId;
+
+    private Object data;
 
     public short getMsgType() {
         return msgType;
@@ -25,5 +27,13 @@ public class RpcMsg {
 
     public void setSequenceId(int sequenceId) {
         this.sequenceId = sequenceId;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 }

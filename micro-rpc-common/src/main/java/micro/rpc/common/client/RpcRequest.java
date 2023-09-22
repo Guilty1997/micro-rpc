@@ -1,13 +1,11 @@
-package org.micro.server.socket.server.handler;
-
+package micro.rpc.common.client;
 
 /**
  * @author：HeHongyi
- * @date: 2023/7/4
- * @description:
+ * @date: 2023/9/21
+ * @description: 客户端请求
  */
 public class RpcRequest {
-
     /**
      * 客户端需要同步获取响应结果 每个消息需要唯一标识
      */
@@ -15,7 +13,7 @@ public class RpcRequest {
     /**
      * 需要调用远程的Bean的别名
      */
-    private String beanRef;
+    private String beanName;       //别名
 
     /**
      * 需要调用远程的接口
@@ -24,15 +22,28 @@ public class RpcRequest {
     /**
      * 需要调用的方法
      */
-    private String methodName;
+    private String methodName;  //方法
     /**
      * 需要调用的方法的入参属性
      */
-    private Class[] paramTypes;
+    private Class[] paramTypes; //入参属性
     /**
      * 需要调用的方法的入参
      */
-    private Object[] args;
+    private Object[] args;      //入参
+
+
+    public RpcRequest() {
+    }
+
+    public RpcRequest(String requestId, String beanName, String interfaces, String methodName, Class[] paramTypes, Object[] args) {
+        this.requestId = requestId;
+        this.beanName = beanName;
+        this.interfaces = interfaces;
+        this.methodName = methodName;
+        this.paramTypes = paramTypes;
+        this.args = args;
+    }
 
     public String getRequestId() {
         return requestId;
@@ -42,12 +53,12 @@ public class RpcRequest {
         this.requestId = requestId;
     }
 
-    public String getBeanRef() {
-        return beanRef;
+    public String getBeanName() {
+        return beanName;
     }
 
-    public void setBeanRef(String beanRef) {
-        this.beanRef = beanRef;
+    public void setBeanName(String beanName) {
+        this.beanName = beanName;
     }
 
     public String getInterfaces() {
@@ -81,5 +92,4 @@ public class RpcRequest {
     public void setArgs(Object[] args) {
         this.args = args;
     }
-
 }

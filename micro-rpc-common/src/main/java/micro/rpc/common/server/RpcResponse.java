@@ -1,13 +1,11 @@
-package org.micro.server.socket.client.hanlder;
-
+package micro.rpc.common.server;
 
 /**
  * @author：HeHongyi
- * @date: 2023/7/9
- * @description: 登陆响应
+ * @date: 2023/9/21
+ * @description: RPC 服务端返回
  */
 public class RpcResponse {
-
     private String requestId;
     private int code;
     private String msg;
@@ -53,5 +51,4 @@ public class RpcResponse {
     public void setException(String exception) {
         this.exception = exception;
     }
-
 }

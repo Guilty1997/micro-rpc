@@ -15,5 +15,7 @@ import java.lang.annotation.*;
 public @interface MicroRpcDiscover {
 
     String beanName() default "";
+
+    String host();
 }
  

@@ -17,7 +17,7 @@ public class ProxyFactory {
         // 设置目标类的字节码文件
         enhancer.setSuperclass(interfaceClass);
         // 设置回调函数
-        enhancer.setCallback(new CglibBeanInvocationHandler(target));
+        enhancer.setCallback(new CglibProxy(target));
         // create方法正式创建代理类
         return (T) enhancer.create();
     }

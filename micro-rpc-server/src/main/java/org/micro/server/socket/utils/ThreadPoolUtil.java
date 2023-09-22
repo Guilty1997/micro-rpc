@@ -23,9 +23,10 @@ public class ThreadPoolUtil {
                 @Override
                 public Thread newThread(Runnable r) {
                     Thread thread = new Thread(r);
-                    thread.setName("Rpc-netty-server");
+                    thread.setName("RPC网络连接池");
                     return thread;
                 }
             });
+
 
 }

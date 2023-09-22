@@ -36,14 +36,13 @@ public class RpcDiscoverBeanPostProcessor implements InstantiationAwareBeanPostP
                     throw new IllegalStateException("@MicroRpcDiscover 注解不支持static领域");
                 }
                 MicroRpcDiscover microRpcDiscover = AnnotationUtils.getAnnotation(field, MicroRpcDiscover.class);
-                ServiceInvocation serviceInvokeInfo = getServiceInvokeInfo(field, microRpcDiscover);
-
-                field.setAccessible(true);
-                Object invokeProxyBean = ProxyFactory.getInvokeProxyBean(field.getType(), serviceInvokeInfo);
-                field.set(bean, invokeProxyBean);
                 if (microRpcDiscover != null) {
+                    ServiceInvocation serviceInvokeInfo = getServiceInvokeInfo(field, microRpcDiscover);
+                    field.setAccessible(true);
+                    field.set(bean, ProxyFactory.getInvokeProxyBean(field.getType(), serviceInvokeInfo));
                     log.info("列名称{}", field.getName());
                 }
+
             }
 
         });
@@ -53,10 +52,16 @@ public class RpcDiscoverBeanPostProcessor implements InstantiationAwareBeanPostP
         String[] split = field.getType().toString().split("\\.");
         String interfaces = field.getType().toString().split(" ")[1];
         String beanRef = StringUtils.isEmpty(annotation.beanName()) ? StringUtils.uncapitalize(split[split.length - 1]) : annotation.beanName();
-
+        String host = annotation.host();
+        if (StringUtils.isEmpty(host)) {
+            log.error("host为空");
+        }
+        String[] ipPort = host.split(":");
         ServiceInvocation serviceInvocation = new ServiceInvocation();
         serviceInvocation.setBeanRef(beanRef);
         serviceInvocation.setInterfaceName(interfaces);
+        serviceInvocation.setIp(ipPort[0]);
+        serviceInvocation.setPort(Integer.parseInt(ipPort[1]));
         log.info("beanName:{}", beanRef);
         return serviceInvocation;
 

@@ -16,4 +16,5 @@ public class ServerCache {
      * 需要发布的服务元数据
      */
     public static List<ServiceRegisterData> serviceRegisterDataList = new ArrayList<>(16);
+
 }

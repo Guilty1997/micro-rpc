@@ -3,6 +3,7 @@ package org.micro.server.processor;
 import micro.rpc.common.register.ServiceRegisterData;
 import org.apache.commons.lang.StringUtils;
 import org.micro.server.annotation.MicroRpcRegister;
+import org.micro.server.cache.RpcCache;
 import org.micro.server.cache.ServerCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +31,7 @@ public class RpcRegisterBeanPostProcessor implements InstantiationAwareBeanPostP
             Class<?>[] interfaces = clazz.getInterfaces();
             Method[] declaredMethods = clazz.getDeclaredMethods();
             String version = service.version();
-
-
+            RpcCache.registerProducerCache(beanName, bean);
             ServerCache.serviceRegisterDataList.add(new ServiceRegisterData(beanName, interfaces[0].getName(), version));
         }
 

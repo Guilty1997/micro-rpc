@@ -17,7 +17,7 @@ import java.util.List;
  * @Date 2023/6/14
  */
 @Service
-@MicroRpcRegister()
+@MicroRpcRegister(beanName = "microRpcTest")
 public class MicroRpcTestImpl implements MicroRpcTest {
     @Override
     public void test() {
@@ -26,7 +26,7 @@ public class MicroRpcTestImpl implements MicroRpcTest {
 
     @Override
     public String test1(UserInfo userInfo) {
-        return "ok";
+        return "ok111111";
     }
 
     @Override

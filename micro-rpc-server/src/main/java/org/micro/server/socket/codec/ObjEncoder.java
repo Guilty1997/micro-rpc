@@ -3,7 +3,7 @@ package org.micro.server.socket.codec;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import org.micro.server.socket.RpcMsg;
+import micro.rpc.common.RpcMsg;
 import org.micro.server.socket.utils.SerializationUtil;
 
 
@@ -13,14 +13,13 @@ import org.micro.server.socket.utils.SerializationUtil;
  * @description: 解码器
  * 协议：
  * - 魔数：用来在第一时间判定是否是无效数据包
- *     - 例如：Java Class文件都是以0x CAFEBABE开头的。Java这么做的原因就是为了快速判断一个文件是不是有可能为class文件，以及这个class文件有没有受损。
+ * - 例如：Java Class文件都是以0x CAFEBABE开头的。Java这么做的原因就是为了快速判断一个文件是不是有可能为class文件，以及这个class文件有没有受损。
  * - 版本号：可以支持协议的升级
  * - 序列化算法：消息正文到底采用哪种序列化反序列化方式
  * - 指令类型：针对业务类型指定
  * - 请求序号：为了双工通信，提供异步能力，序号用于回调
  * - 正文长度：没有长度会导致浏览器持续加载
  * - 消息正文：具体消息内容
- *
  */
 public class ObjEncoder extends MessageToByteEncoder<RpcMsg> {
 
@@ -41,7 +40,7 @@ public class ObjEncoder extends MessageToByteEncoder<RpcMsg> {
         // 无意义，对齐填充,使其满足2的n次方
         out.writeByte(0xff);
         // 获取内容的字节数组
-        byte[] data = SerializationUtil.serialize(in);
+        byte[] data = SerializationUtil.serialize(in.getData());
 
         // 长度
         out.writeInt(data.length);

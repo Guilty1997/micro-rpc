@@ -20,8 +20,8 @@ import java.util.List;
 public class MicroRpcTestController {
 
     // 调用远程服务
-    @MicroRpcDiscover()
-    private MicroRpcTest easyRpcTest;
+    @MicroRpcDiscover(host = "127.0.0.1:20880")
+    private MicroRpcTest microRpcTest;
 
     // 调用本地
 //    @Resource
@@ -30,7 +30,7 @@ public class MicroRpcTestController {
     // 无传参 无返回测试
     @GetMapping("/test")
     public String test() {
-        easyRpcTest.test();
+        microRpcTest.test();
         return "ok";
     }
 
@@ -46,18 +46,18 @@ public class MicroRpcTestController {
         userInfo.setSex(0);
         userInfo.setIdCard("");
         userInfo.setPhone("");
-        return easyRpcTest.test1(userInfo);
+        return microRpcTest.test1(userInfo);
     }
 
     // 简单传参 POJO返回测试
     @GetMapping("/test2")
     UserInfo test2(Integer id) {
-        return easyRpcTest.test2(id);
+        return microRpcTest.test2(id);
     }
 
     // 无传参 POJO_LIST返回测试
     @GetMapping("/test3")
     List<UserInfo> test3() {
-        return easyRpcTest.test3();
+        return microRpcTest.test3();
     }
 }
