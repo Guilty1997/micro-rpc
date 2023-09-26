@@ -1,20 +1,21 @@
 # micro-rpc
 
-一个轻量级rpc框架
+## 项目介绍
 
-## RPC简介
+本项目为学习类似于`Dubbo`这样的`RPC`框架而诞生的项目；由于`Dobbo`的源码文档过于复杂，学习起来比较困难。但是`Dubbo`
+最核心的还是服务通信
+所以就尝试一下自己实现一个简单的服务调用；先把最基本的功能完善掉，然后再反过去学习`Dubbo`
 
-RPC（Remote Procedure Call）远程过程调用，是一种进程间通信方式。
-它允许一个进程调用另一个进程中的过程，而像似调用本地过程一样。
+## 概述
+
+RPC（Remote Procedure Call）远程过程调用，是一种进程间通信方式。它允许一个进程调用另一个进程中的过程，而像似调用本地过程一样。
 
 RPC 的整体系统架构图如下：
 
 ![img.png](imags/系统架构.png)
 
-图中服务端启动时将自己的服务节点信息注册到注册中心， 客户端调用远
-程方法时会订阅注册中心中的可用服务节点信息， 拿到可用服务节点之后
-远程调用方法，当注册中心中的可用服务节点发生变化时会通知客户端，避
-免客户端继续调用已经失效的节点；客户端远程调用示意图：
+图中服务端启动时将自己的服务节点信息注册到注册中心， 客户端调用远程方法时会订阅注册中心中的可用服务节点信息，拿到可用服务节点之后
+远程调用方法，当注册中心中的可用服务节点发生变化时会通知客户端，避免客户端继续调用已经失效的节点；客户端远程调用示意图：
 ![img.png](imags/远程调用.png)
 
 1.将目标服务、目标方法、调用目标方法的参数等必要信息序列化
@@ -70,102 +71,7 @@ ZkClientConfig是配置类，它提供了一个构造器，可以指定zookeeper
 - 正文长度：没有长度会导致浏览器持续加载
 - 消息正文：具体消息内容
 
-## 设计思路
+## 消息超时设置
 
-1. 基于netty实现rpc框架
-2. 基于注解实现rpc调用
-3. 基于注解实现rpc服务注册
-4. 基于注解实现rpc服务发现
-5. 基于注解实现rpc服务监控
 
-## 快速开始
-
-### 引入依赖
-
-```xml
-
-<dependency>
-    <groupId>com.github.houbb</groupId>
-    <artifactId>micro-rpc</artifactId>
-    <version>0.0.1</version>
-</dependency>
-```
-
-### 定义接口
-
-```java
-
-@RpcService
-public interface HelloService {
-
-    /**
-     * 测试方法
-     * @param name 名称
-     * @return 结果
-     */
-    String hello(String name);
-
-}
-```
-
-### 实现接口
-
-```java
-
-@RpcService
-public class HelloServiceImpl implements HelloService {
-
-    @Override
-    public String hello(String name) {
-        return "hello " + name;
-    }
-
-}
-```
-
-### 启动服务
-
-```java
-public class RpcServer {
-
-    public static void main(String[] args) {
-        RpcServer server = new RpcServer();
-        server.start(8080);
-    }
-
-}
-```
-
-### 调用服务
-
-```java
-public class RpcClient {
-
-    public static void main(String[] args) {
-        RpcClient client = new RpcClient();
-        HelloService helloService = client.getProxy(HelloService.class);
-        String result = helloService.hello("world");
-        System.out.println(result);
-    }
-
-}
-```
-
-## 注解说明
-
-### @RpcService
-
-用于接口上，表示该接口为 rpc 服务。
-
-### @RpcReference
-
-用于接口上，表示该接口为 rpc 引用。
-
-### @RpcServer
-
-用于接口上，表示该接口为 rpc 服务端。
-
-### @RpcClient
-
-用于接口上，表示该接口为 rpc 客户端。
 

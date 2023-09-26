@@ -5,10 +5,10 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import micro.rpc.common.RpcMsg;
 import micro.rpc.common.client.RpcRequest;
 import micro.rpc.common.server.RpcResponse;
 import org.micro.server.cache.RpcCache;
-import micro.rpc.common.RpcMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +58,6 @@ public class RequestHandler extends SimpleChannelInboundHandler<RpcRequest> {
             Method method = classType.getMethod(msg.getMethodName(), msg.getParamTypes());
             Object bean = RpcCache.getProducerCache(msg.getBeanName());
             Object invoke = method.invoke(bean, msg.getArgs());
-            log.info(invoke.toString());
 
             RpcMsg rpcMsg = new RpcMsg();
             short i = 2;
@@ -66,7 +65,7 @@ public class RequestHandler extends SimpleChannelInboundHandler<RpcRequest> {
             rpcMsg.setSequenceId(111);
             RpcResponse rpcResponse = new RpcResponse();
             rpcResponse.setCode(200);
-            rpcResponse.setRequestId("1111");
+            rpcResponse.setRequestId(msg.getRequestId());
             rpcResponse.setData(invoke);
             rpcMsg.setData(rpcResponse);
 

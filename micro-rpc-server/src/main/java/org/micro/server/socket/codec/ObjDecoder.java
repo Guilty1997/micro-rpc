@@ -5,7 +5,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import micro.rpc.common.RpcEnum;
-import org.micro.server.socket.utils.SerializationUtil;
+import org.micro.server.utils.SerializationUtil;
 
 import java.util.List;
 
@@ -36,8 +36,6 @@ public class ObjDecoder extends ByteToMessageDecoder {
         byte[] bytes = new byte[length];
         in.readBytes(bytes, 0, length);
         Object object = SerializationUtil.deserialize(bytes, RpcEnum.getByCode(messageType).getaClass());
-        System.out.println("decode:" + magicNum + "," + version + "," + serializerType + "," + messageType + "," + sequenceId + "," + length);
-        System.out.println("decode:" + JSON.toJSONString(object));
         out.add(object);
     }
 }

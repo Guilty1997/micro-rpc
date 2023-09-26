@@ -11,7 +11,7 @@
     <modules>
         <module>micro-rpc-common</module>
         <module>micro-rpc-server</module>
-        <module>micro-rpc-test</module>
+        <module>micro-rpc-tset</module>
     </modules>
 
 

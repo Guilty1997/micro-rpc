@@ -8,7 +8,7 @@ import org.micro.server.register.IRegisterCenter;
 import org.micro.server.register.ZoomKeeperRegisterCenter;
 import org.micro.server.socket.server.RpcServer;
 import org.micro.server.socket.server.handler.ServerChannelInitializer;
-import org.micro.server.socket.utils.ThreadPoolUtil;
+import org.micro.server.utils.ThreadPoolUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;

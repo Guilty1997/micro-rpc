@@ -2,18 +2,21 @@ package org.micro.server.proxy;
 
 
 import io.netty.channel.ChannelFuture;
-import micro.rpc.common.client.ServiceInvocation;
+import micro.rpc.common.RpcMsg;
 import micro.rpc.common.client.RpcRequest;
+import micro.rpc.common.client.ServiceInvocation;
+import micro.rpc.common.server.RpcResponse;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import org.micro.server.cache.RpcCache;
-import micro.rpc.common.RpcMsg;
-import org.micro.server.cache.RpcResponseCache;
 import org.micro.server.socket.client.RpcClient;
-import org.micro.server.socket.utils.ThreadPoolUtil;
+import org.micro.server.utils.RpcResponseFuture;
+import org.micro.server.utils.ThreadPoolUtil;
 
 import java.lang.reflect.Method;
 import java.util.UUID;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author：HeHongyi
@@ -29,11 +32,11 @@ public class CglibProxy implements MethodInterceptor {
 
     @Override
     public Object intercept(Object object, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
-        //todo 完成客户遍编写
         String host = invokeInfo.getIp() + ":" + invokeInfo.getPort();
         String methodName = method.getName();
         Class<?>[] paramTypes = method.getParameterTypes();
-        RpcRequest rpcRequest = new RpcRequest(UUID.randomUUID().toString(), invokeInfo.getBeanRef(), invokeInfo.getInterfaceName(), methodName, paramTypes, args);
+        String uuId = UUID.randomUUID().toString();
+        RpcRequest rpcRequest = new RpcRequest(uuId, invokeInfo.getBeanRef(), invokeInfo.getInterfaceName(), methodName, paramTypes, args);
 
         ChannelFuture clientChannel = RpcCache.getClientChannel(host);
 
@@ -51,16 +54,11 @@ public class CglibProxy implements MethodInterceptor {
         rpcMsg.setMsgType(i);
         rpcMsg.setSequenceId(111);
         rpcMsg.setData(rpcRequest);
-        clientChannel.channel().writeAndFlush(rpcMsg);
 
-        while (true) {
-            if (RpcResponseCache.get("1111") != null) {
-
-                break;
-            }
-        }
+        Future<RpcResponse> submit = ThreadPoolUtil.timeOutPool.submit(new RpcResponseFuture(rpcRequest.getRequestId(), rpcMsg, clientChannel));
+        RpcResponse rpcResponse = submit.get(1000L, TimeUnit.SECONDS);
 
         //todo 完成反馈
-        return RpcResponseCache.get("1111").getData();
+        return rpcResponse.getData();
     }
 }
