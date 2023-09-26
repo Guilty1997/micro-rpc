@@ -10,8 +10,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>micro-rpc-common</module>
-        <module>micro-rpc-server</module>
-        <module>micro-rpc-tset</module>
+        <module>micro-rpc-sdk</module>
+        <module>micro-rpc-test</module>
     </modules>
 
 

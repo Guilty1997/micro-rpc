@@ -3,25 +3,25 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.rpc</groupId>
-        <artifactId>micro-rpc-tset</artifactId>
+        <artifactId>micro-rpc</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>micro-rpc-test-consumer</artifactId>
+    <artifactId>micro-rpc-test</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>micro-rpc-test-interfaces</module>
+        <module>micro-rpc-test-provider</module>
+        <module>micro-rpc-test-consumer</module>
+    </modules>
 
     <dependencies>
-
         <dependency>
             <groupId>org.rpc</groupId>
-            <artifactId>micro-rpc-test-interfaces</artifactId>
+            <artifactId>micro-rpc-sdk</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.3.5.RELEASE</version>
-        </dependency>
     </dependencies>
+
 
 </project>
