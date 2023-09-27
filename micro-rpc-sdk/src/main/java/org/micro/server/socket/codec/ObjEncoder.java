@@ -10,7 +10,7 @@ import org.micro.server.utils.SerializationUtil;
 /**
  * @author：HeHongyi
  * @date: 2023/6/27
- * @description: 解码器
+ * @description: 编码器
  * 协议：
  * - 魔数：用来在第一时间判定是否是无效数据包
  * - 例如：Java Class文件都是以0x CAFEBABE开头的。Java这么做的原因就是为了快速判断一个文件是不是有可能为class文件，以及这个class文件有没有受损。
