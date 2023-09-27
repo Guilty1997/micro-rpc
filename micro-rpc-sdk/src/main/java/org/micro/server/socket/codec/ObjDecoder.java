@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author：HeHongyi
  * @date: 2023/6/27
- * @description: 编码器
+ * @description: 解码器
  */
 public class ObjDecoder extends ByteToMessageDecoder {
 
