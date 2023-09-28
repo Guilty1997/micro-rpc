@@ -1,6 +1,7 @@
 package micro.rpc.sdk.register;
 
 import com.alibaba.fastjson.JSON;
+import micro.rpc.common.exception.RpcException;
 import micro.rpc.common.register.ServiceInstance;
 import micro.rpc.sdk.config.RpcConfig;
 import org.I0Itec.zkclient.ZkClient;
@@ -26,7 +27,11 @@ public class ZoomKeeperRegisterCenter implements IRegisterCenter {
 
 
     public ZoomKeeperRegisterCenter(String address, RpcConfig rpcConfig) {
-        this.zkClient = new ZkClient(address);
+        try {
+            this.zkClient = new ZkClient(address, 1000, 2000);
+        } catch (Exception e) {
+            throw new RpcException("连接ZK超时", e);
+        }
         this.rpcConfig = rpcConfig;
     }
 
