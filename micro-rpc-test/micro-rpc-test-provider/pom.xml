@@ -4,7 +4,7 @@
     <parent>
         <groupId>rpc.do</groupId>
         <artifactId>micro-rpc-test</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>micro-rpc-test-provider</artifactId>
@@ -13,13 +13,13 @@
         <dependency>
             <groupId>rpc.do</groupId>
             <artifactId>micro-rpc-sdk</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>rpc.do</groupId>
             <artifactId>micro-rpc-test-interfaces</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
