@@ -3,9 +3,9 @@ package micro.rpc.test.consumer.controller;
 
 import micro.rpc.common.Result;
 
+import micro.rpc.sdk.annotation.MicroRpcReference;
 import micro.rpc.test.interfaces.MicroRpcTest;
 import micro.rpc.test.interfaces.entiy.UserInfo;
-import micro.rpc.sdk.annotation.MicroRpcDiscover;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +23,7 @@ import java.util.List;
 public class MicroRpcTestController {
 
     // 调用远程服务
-    @MicroRpcDiscover(host = "127.0.0.1:20880")
+    @MicroRpcReference(host = "127.0.0.1:20880")
     private MicroRpcTest microRpcTest;
 
     // 调用本地

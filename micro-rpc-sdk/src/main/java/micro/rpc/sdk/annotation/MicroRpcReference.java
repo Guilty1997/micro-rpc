@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Inherited
 @Target(value = {ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MicroRpcDiscover {
+public @interface MicroRpcReference {
 
     String beanName() default "";
 

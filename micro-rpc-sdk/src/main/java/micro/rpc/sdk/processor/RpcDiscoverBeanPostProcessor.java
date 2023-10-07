@@ -1,7 +1,7 @@
 package micro.rpc.sdk.processor;
 
 import micro.rpc.common.client.ServiceInvocation;
-import micro.rpc.sdk.annotation.MicroRpcDiscover;
+import micro.rpc.sdk.annotation.MicroRpcReference;
 import micro.rpc.sdk.proxy.ProxyFactory;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -31,13 +31,13 @@ public class RpcDiscoverBeanPostProcessor implements InstantiationAwareBeanPostP
 
     private void rpcServiceInvokeAnnotationHandler(Class<?> aClass, Object bean) {
         ReflectionUtils.doWithLocalFields(aClass, field -> {
-            if (field.isAnnotationPresent(MicroRpcDiscover.class)) {
+            if (field.isAnnotationPresent(MicroRpcReference.class)) {
                 if (Modifier.isStatic(field.getModifiers())) {
-                    throw new IllegalStateException("@MicroRpcDiscover 注解不支持static领域");
+                    throw new IllegalStateException("@MicroRpcReference 注解不支持static领域");
                 }
-                MicroRpcDiscover microRpcDiscover = AnnotationUtils.getAnnotation(field, MicroRpcDiscover.class);
-                if (microRpcDiscover != null) {
-                    ServiceInvocation serviceInvokeInfo = getServiceInvokeInfo(field, microRpcDiscover);
+                MicroRpcReference microRpcReference = AnnotationUtils.getAnnotation(field, MicroRpcReference.class);
+                if (microRpcReference != null) {
+                    ServiceInvocation serviceInvokeInfo = getServiceInvokeInfo(field, microRpcReference);
                     field.setAccessible(true);
                     field.set(bean, ProxyFactory.getInvokeProxyBean(field.getType(), serviceInvokeInfo));
                     log.info("列名称{}", field.getName());
@@ -48,7 +48,7 @@ public class RpcDiscoverBeanPostProcessor implements InstantiationAwareBeanPostP
         });
     }
 
-    private ServiceInvocation getServiceInvokeInfo(Field field, MicroRpcDiscover annotation) {
+    private ServiceInvocation getServiceInvokeInfo(Field field, MicroRpcReference annotation) {
         String[] split = field.getType().toString().split("\\.");
         String interfaces = field.getType().toString().split(" ")[1];
         String beanRef = StringUtils.isEmpty(annotation.beanName()) ? StringUtils.uncapitalize(split[split.length - 1]) : annotation.beanName();
