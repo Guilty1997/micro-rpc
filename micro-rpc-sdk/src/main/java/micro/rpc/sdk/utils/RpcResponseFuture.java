@@ -44,7 +44,7 @@ public class RpcResponseFuture implements Callable<RpcResponse> {
         //syncUninterruptibly()让主线程同步等待子线程结果。
         channelFuture.syncUninterruptibly();
 
-        RpcResponse poll = instance.getResponseBlockingQueue().poll(1, TimeUnit.SECONDS);
+        RpcResponse poll = instance.getResponseBlockingQueue().poll(5, TimeUnit.SECONDS);
 
         if (poll == null) {
             throw new RuntimeException("requestId:" + requestId + " 请求超时");

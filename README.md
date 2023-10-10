@@ -40,7 +40,11 @@ RPC 的整体系统架构图大致如下：
 ```
 **示例代码**
 ```java
- private void registerService(ServiceInstance serviceInstance) {
+public class ZoomKeeperRegisterCenter implements IRegisterCenter {
+
+    //....
+
+    private void registerService(ServiceInstance serviceInstance) {
         String applicationName = rpcConfig.getApplication().getName();
         //根节点
         String servicePath = "/rpc/" + applicationName + "/service";
@@ -67,7 +71,10 @@ RPC 的整体系统架构图大致如下：
 //            ExportedServiceURI.add(uriPath);
             log.info("service :{} exported zk", uriPath);
         }
+
     }
+    //....
+}
 ```
 注册流程分为
 - [x] 注册服务提供者
